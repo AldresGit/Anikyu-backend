@@ -1,10 +1,5 @@
 from django.db import models
 
-class User(models.Model):
-    username = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=100)
-    anime_count = models.IntegerField(default=0)
-
 class Anime(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -16,6 +11,11 @@ class Anime(models.Model):
     rating = models.FloatField()
     start_date = models.DateField()
 
-    watched_animes = models.ManyToManyField(User, related_name="watched_animes")
-    wanted_animes = models.ManyToManyField(User, related_name="wanted_animes")
-    unwanted_animes = models.ManyToManyField(User, related_name="unwanted_animes")
+class User(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=150)
+    anime_count = models.IntegerField(default=0)
+
+    watched_animes = models.ManyToManyField(Anime, related_name="watched_animes")
+    wanted_animes = models.ManyToManyField(Anime, related_name="wanted_animes")
+    unwanted_animes = models.ManyToManyField(Anime, related_name="unwanted_animes")
